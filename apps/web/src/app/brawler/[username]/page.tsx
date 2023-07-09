@@ -1,5 +1,6 @@
 import { TournamentStatus, prisma } from 'database';
 import BrawlerTournamentList from '@/components/Brawler-Tournament-List';
+import UnderConstructionAlert from '@/components/UnderConstruction';
 
 export default async function BrawlerDetailsPage({
   params: { username },
@@ -46,6 +47,9 @@ export default async function BrawlerDetailsPage({
 
   return (
     <div className="flex-1 flex flex-col py-12 mx-12 md:mx-64">
+      <div className="mb-12">
+        <UnderConstructionAlert />
+      </div>
       <div className="flex flex-col">
         <div className="flex-1 flex flex-row items-center">
           <div className="avatar placeholder">
@@ -58,7 +62,7 @@ export default async function BrawlerDetailsPage({
           <p className="p-4">{brawler.username}</p>
         </div>
       </div>
-      <div className="divider pt-2 pb-8" />
+      <div className="divider" />
       <h2 className="text-xl">Tournaments</h2>
       <BrawlerTournamentList brawler={brawler} tournaments={tournaments} />
     </div>
