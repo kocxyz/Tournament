@@ -1,0 +1,15 @@
+{
+  "name": "brackets",
+  "version": "1.0.0",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {},
+  "dependencies": {
+    "brackets-manager": "^1.6.1",
+    "brackets-prisma-db": "^1.0.1",
+    "database": "^1.0.0",
+    "typescript": "^5.1.6"
+  }
+}

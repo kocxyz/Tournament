@@ -1,1 +1,1 @@
-# Knockou
+# Knockout City XYZ Tournament
