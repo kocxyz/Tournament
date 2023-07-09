@@ -11,7 +11,10 @@ export default function TeamMemberListItem(params: {
       <th>{params.index + 1}</th>
       <td>
         <p>
-          <a href={`/brawler/${params.brawler.username}`}>
+          <a
+            className="hover:text-sky-300 text-gray-600"
+            href={`/brawler/${params.brawler.username}`}
+          >
             {params.brawler.username}
           </a>
           {params.label !== undefined ? (

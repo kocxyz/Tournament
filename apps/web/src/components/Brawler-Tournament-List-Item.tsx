@@ -13,12 +13,26 @@ export default function BrawlerTournamentListItem(params: {
     <tr className="bg-base-200">
       <th>{params.index + 1}</th>
       <td>
-        <a href={`/tournament/${params.tournament.id}`}>
+        <a
+          className="hover:text-sky-300 text-gray-600"
+          href={`/tournament/${params.tournament.id}`}
+        >
           {params.tournament.title}
         </a>
       </td>
       <td>
-        <p>{team ? <a href={`/team/${team.id}`}>{team.name}</a> : '-'}</p>
+        <p>
+          {team ? (
+            <a
+              className="hover:text-sky-300 text-gray-600"
+              href={`/team/${team.id}`}
+            >
+              {team.name}
+            </a>
+          ) : (
+            '-'
+          )}
+        </p>
       </td>
     </tr>
   );
