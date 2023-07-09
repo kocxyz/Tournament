@@ -30,6 +30,19 @@ export default async function BrawlerDetailsPage({
         in: [TournamentStatus.IN_PROGRESS, TournamentStatus.FINISHED],
       },
     },
+    include: {
+      participants: {
+        include: {
+          team: true,
+        },
+      },
+      stages: {
+        take: 1,
+        orderBy: {
+          number: 'asc',
+        },
+      },
+    },
   });
 
   return (
@@ -53,7 +66,7 @@ export default async function BrawlerDetailsPage({
       <h2 className="text-xl">Members</h2>
       <TeamTeamMemberList team={team} />
       <h2 className="pt-12 text-xl">Tournaments</h2>
-      <TeamTournamentList tournaments={tournaments} />
+      <TeamTournamentList team={team} tournaments={tournaments} />
     </div>
   );
 }
