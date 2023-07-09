@@ -1,5 +1,5 @@
 import React from 'react';
-import { Brawler, Participant, Team, Tournament } from 'database';
+import { Brawler, Participant, Stage, Team, Tournament } from 'database';
 import BrawlerTournamentListItem from './Brawler-Tournament-List-Item';
 
 export default function BrawlerTournamentList(params: {
@@ -9,6 +9,7 @@ export default function BrawlerTournamentList(params: {
       team: Team | null;
       brawlers: Brawler[];
     })[];
+    stages: Stage[];
   })[];
 }) {
   return (
@@ -23,7 +24,7 @@ export default function BrawlerTournamentList(params: {
             </tr>
           </thead>
           <tbody>
-            {params.tournaments.map((tournament, index) => {
+            {params.tournaments.map((tournament) => {
               const participant = tournament.participants.reduce((acc, cur) => {
                 const result = cur.brawlers.find(
                   (brawler) => brawler.id === params.brawler.id,
@@ -38,7 +39,6 @@ export default function BrawlerTournamentList(params: {
 
               return (
                 <BrawlerTournamentListItem
-                  index={index}
                   tournament={tournament}
                   participant={participant}
                 />

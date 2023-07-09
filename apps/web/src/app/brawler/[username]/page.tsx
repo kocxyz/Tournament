@@ -42,6 +42,12 @@ export default async function BrawlerDetailsPage({
           brawlers: true,
         },
       },
+      stages: {
+        take: 1,
+        orderBy: {
+          number: 'asc',
+        },
+      },
     },
   });
 
