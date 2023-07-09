@@ -30,13 +30,27 @@ export default function BracketsViewer(params: { data: Database }) {
 
   return (
     <>
-      <div id="root" className="brackets-viewer" />
+      <div
+        id="root"
+        className="flex items-center justify-center brackets-viewer"
+      />
+
+      <script
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/gh/Drarig29/brackets-viewer.js/dist/brackets-viewer.min.js"
+      ></script>
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Drarig29/brackets-viewer.js/dist/brackets-viewer.min.css"
+      />
+
       <style>
         {`
           .brackets-viewer {
             /* Colors */
             --primary-background: #ffffff00 !important;
-            --secondary-background: #c4dfdf;
+            --secondary-background: #e1e1e1;
             --match-background: var(--primary-background);
             --font-color: #212529;
             --win-color: #50b649;
@@ -60,7 +74,7 @@ export default function BracketsViewer(params: { data: Database }) {
             /* Sizes */
             --text-size: 1em;
             --round-margin: 40px;
-            --match-width: 200px;
+            --match-width: 250px;
             --match-horizontal-padding: 12px;
             --match-vertical-padding: 8px;
             --connector-border-width: 2px;
@@ -92,15 +106,6 @@ export default function BracketsViewer(params: { data: Database }) {
           }
         `}
       </style>
-
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/Drarig29/brackets-viewer.js/dist/brackets-viewer.min.css"
-      />
-      <script
-        type="text/javascript"
-        src="https://cdn.jsdelivr.net/gh/Drarig29/brackets-viewer.js/dist/brackets-viewer.min.js"
-      ></script>
     </>
   );
 }
