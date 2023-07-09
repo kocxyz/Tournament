@@ -12,7 +12,7 @@ export default async function TournamentDetailsPage({
   });
 
   if (tournament === null) {
-    return <div />;
+    return <div>Tournament not found!</div>;
   }
 
   const data = await manager.get.tournamentData(tournament.managerTournamentId);

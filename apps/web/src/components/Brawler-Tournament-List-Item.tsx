@@ -1,9 +1,10 @@
 import React from 'react';
-import { Tournament } from 'database';
+import { Participant, Team, Tournament } from 'database';
 
-export default function TournamentListItem(params: {
+export default function BrawlerTournamentListItem(params: {
   index: number;
   tournament: Tournament;
+  participant: Participant & { team: Team | null };
   label?: string;
 }) {
   return (
@@ -13,6 +14,9 @@ export default function TournamentListItem(params: {
         <a href={`/tournament/${params.tournament.id}`}>
           {params.tournament.title}
         </a>
+      </td>
+      <td>
+        <p>{params.participant.team?.name ?? '-'}</p>
       </td>
     </tr>
   );

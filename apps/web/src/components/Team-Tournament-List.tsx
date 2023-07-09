@@ -1,8 +1,10 @@
 import React from 'react';
 import { Tournament } from 'database';
-import TournamentListItem from './Tournament-List-Item';
+import TeamTournamentListItem from './Team-Tournament-List-Item';
 
-export default function TournamentList(params: { tournaments: Tournament[] }) {
+export default function TeamTournamentList(params: {
+  tournaments: Tournament[];
+}) {
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto">
@@ -15,7 +17,7 @@ export default function TournamentList(params: { tournaments: Tournament[] }) {
           </thead>
           <tbody>
             {params.tournaments.map((tournament, index) => (
-              <TournamentListItem index={index} tournament={tournament} />
+              <TeamTournamentListItem index={index} tournament={tournament} />
             ))}
           </tbody>
         </table>

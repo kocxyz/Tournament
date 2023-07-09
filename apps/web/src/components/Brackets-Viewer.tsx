@@ -5,8 +5,6 @@ import { Database } from 'brackets-manager';
 
 export default function BracketsViewer(params: { data: Database }) {
   useEffect(() => {
-    console.log(params.data);
-
     (window as any).bracketsViewer.render(
       {
         stages: params.data.stage,

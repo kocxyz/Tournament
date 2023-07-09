@@ -1,6 +1,6 @@
-import TeamMemberList from '@/components/Team-Member-List';
-import TournamentList from '@/components/Tournament-List';
-import { prisma } from 'database';
+import TeamTeamMemberList from '@/components/Team-Member-List';
+import TeamTournamentList from '@/components/Team-Tournament-List';
+import { TournamentStatus, prisma } from 'database';
 
 export default async function BrawlerDetailsPage({
   params: { id },
@@ -25,6 +25,9 @@ export default async function BrawlerDetailsPage({
           teamId: team.id,
         },
       },
+      status: {
+        in: [TournamentStatus.IN_PROGRESS, TournamentStatus.FINISHED],
+      },
     },
   });
 
@@ -44,9 +47,9 @@ export default async function BrawlerDetailsPage({
       </div>
       <div className="divider pt-2 pb-8" />
       <h2 className="text-xl">Members</h2>
-      <TeamMemberList team={team} />
+      <TeamTeamMemberList team={team} />
       <h2 className="pt-12 text-xl">Tournaments</h2>
-      <TournamentList tournaments={tournaments} />
+      <TeamTournamentList tournaments={tournaments} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import { prisma } from 'database';
-import TournamentList from '@/components/Tournament-List';
+import { TournamentStatus, prisma } from 'database';
+import BrawlerTournamentList from '@/components/Brawler-Tournament-List';
 
 export default async function BrawlerDetailsPage({
   params: { username },
@@ -30,6 +30,17 @@ export default async function BrawlerDetailsPage({
           },
         },
       },
+      status: {
+        in: [TournamentStatus.IN_PROGRESS, TournamentStatus.FINISHED],
+      },
+    },
+    include: {
+      participants: {
+        include: {
+          team: true,
+          brawlers: true,
+        },
+      },
     },
   });
 
@@ -49,7 +60,7 @@ export default async function BrawlerDetailsPage({
       </div>
       <div className="divider pt-2 pb-8" />
       <h2 className="text-xl">Tournaments</h2>
-      <TournamentList tournaments={tournaments} />
+      <BrawlerTournamentList brawler={brawler} tournaments={tournaments} />
     </div>
   );
 }
