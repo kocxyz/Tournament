@@ -7,6 +7,8 @@ export default function BrawlerTournamentListItem(params: {
   participant: Participant & { team: Team | null };
   label?: string;
 }) {
+  const team = params.participant.team;
+
   return (
     <tr className="bg-base-200">
       <th>{params.index + 1}</th>
@@ -16,7 +18,7 @@ export default function BrawlerTournamentListItem(params: {
         </a>
       </td>
       <td>
-        <p>{params.participant.team?.name ?? '-'}</p>
+        <p>{team ? <a href={`/team/${team.id}`}>{team.name}</a> : '-'}</p>
       </td>
     </tr>
   );
