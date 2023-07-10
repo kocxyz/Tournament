@@ -15,6 +15,9 @@ export default async function BrawlerDetailsPage({
         mode: 'insensitive',
       },
     },
+    include: {
+      team: true,
+    },
   });
 
   if (brawler === null) {
@@ -83,7 +86,19 @@ export default async function BrawlerDetailsPage({
             </div>
           )}
 
-          <p className="p-4">{brawler.username}</p>
+          <div className="flex flex-col p-4">
+            <p>{brawler.username}</p>
+            {brawler.team ? (
+              <div className="badge badge-neutral">
+                <a
+                  className="hover:text-sky-300"
+                  href={`/team/${brawler.team.id}`}
+                >
+                  {brawler.team.name}
+                </a>
+              </div>
+            ) : undefined}
+          </div>
         </div>
       </div>
       <div className="divider" />
