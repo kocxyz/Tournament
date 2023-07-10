@@ -46,7 +46,7 @@ export default async function BrawlerDetailsPage({
   });
 
   return (
-    <div className="flex-1 flex flex-col py-12 mx-12 md:mx-64">
+    <div className="flex-1 flex flex-col py-12 mx-12 md:mx-24 xl:mx-64">
       <div className="mb-12">
         <UnderConstructionAlert />
       </div>
