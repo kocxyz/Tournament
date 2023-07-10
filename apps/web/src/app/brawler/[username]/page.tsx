@@ -1,3 +1,4 @@
+import { Routes, client } from 'discord';
 import { TournamentStatus, prisma } from 'database';
 import BrawlerTournamentList from '@/components/Brawler-Tournament-List';
 import UnderConstructionAlert from '@/components/UnderConstruction';
@@ -19,6 +20,8 @@ export default async function BrawlerDetailsPage({
   if (brawler === null) {
     return <div />;
   }
+
+  const user = await client.get(Routes.user(brawler.discordId));
 
   const tournaments = await prisma.tournament.findMany({
     where: {
@@ -58,13 +61,28 @@ export default async function BrawlerDetailsPage({
       </div>
       <div className="flex flex-col">
         <div className="flex-1 flex flex-row items-center">
-          <div className="avatar placeholder">
-            <div className="bg-neutral-focus text-neutral-content rounded-full w-12 h-12">
-              <span className="text-xl">
-                {brawler.username.charAt(0).toUpperCase()}
-              </span>
+          {typeof user === 'object' &&
+          user !== undefined &&
+          user !== null &&
+          'avatar' in user &&
+          user!.avatar ? (
+            <div className="avatar">
+              <div className="w-12 h-12 mask mask-squircle">
+                <img
+                  src={`https://cdn.discordapp.com/avatars/${brawler.discordId}/${user.avatar}`}
+                />
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="avatar placeholder">
+              <div className="bg-neutral-focus text-neutral-content rounded-full w-12 h-12">
+                <span className="text-xl">
+                  {brawler.username.charAt(0).toUpperCase()}
+                </span>
+              </div>
+            </div>
+          )}
+
           <p className="p-4">{brawler.username}</p>
         </div>
       </div>
