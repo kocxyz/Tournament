@@ -2,11 +2,17 @@
 
 import React, { useEffect, useState } from 'react';
 import { Database } from 'brackets-manager';
-import { Match, MatchGame } from 'brackets-model';
+import { Id, Match, MatchGame } from 'brackets-model';
+import { Brawler, Participant, Tournament } from 'database';
 
 type MatchWithMetadata = Match & { metadata: { games: MatchGame[] } };
 
-export default function BracketsViewer(params: { data: Database }) {
+export default function BracketsViewer(params: {
+  data: Database;
+  tournament: Tournament & {
+    participants: (Participant & { brawlers: Brawler[] })[];
+  };
+}) {
   const [match, setMatch] = useState<MatchWithMetadata | undefined>(undefined);
 
   function handleMatchClick(match: MatchWithMetadata) {
@@ -52,6 +58,12 @@ export default function BracketsViewer(params: { data: Database }) {
     (p) => p.id === match?.opponent2?.id,
   );
 
+  function getDBParticipantById(
+    id: Id,
+  ): (Participant & { brawlers: Brawler[] }) | undefined {
+    return params.tournament.participants.find((p) => p.id === id);
+  }
+
   return (
     <>
       <dialog id="match_modal" className="modal modal-bottom sm:modal-middle">
@@ -75,7 +87,16 @@ export default function BracketsViewer(params: { data: Database }) {
                     {opponent1 ? (
                       <a
                         className="hover:text-sky-300"
-                        href={`/team/${opponent1.id}`}
+                        href={
+                          params.tournament.teamSize === 1
+                            ? `/brawler/${
+                                getDBParticipantById(opponent1.id)?.brawlers[0]
+                                  .username
+                              }`
+                            : `/team/${
+                                getDBParticipantById(opponent1.id)?.teamId
+                              }`
+                        }
                       >
                         {opponent1.name}
                       </a>
@@ -92,7 +113,16 @@ export default function BracketsViewer(params: { data: Database }) {
                     {opponent2 ? (
                       <a
                         className="hover:text-sky-300"
-                        href={`/team/${opponent2.id}`}
+                        href={
+                          params.tournament.teamSize === 1
+                            ? `/brawler/${
+                                getDBParticipantById(opponent2.id)?.brawlers[0]
+                                  .username
+                              }`
+                            : `/team/${
+                                getDBParticipantById(opponent2.id)?.teamId
+                              }`
+                        }
                       >
                         {opponent2.name}
                       </a>
