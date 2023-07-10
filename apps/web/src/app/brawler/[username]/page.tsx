@@ -64,7 +64,7 @@ export default async function BrawlerDetailsPage({
   );
 
   return (
-    <div className="flex-1 flex flex-col py-12 mx-12 md:mx-64">
+    <div className="flex-1 flex flex-col py-12 mx-12 md:mx-24 xl:mx-64">
       <div className="mb-12">
         <UnderConstructionAlert />
       </div>
@@ -95,16 +95,16 @@ export default async function BrawlerDetailsPage({
           <div className="flex flex-col px-4">
             <p>{brawler.username}</p>
             <div className="flex flex-row gap-x-2">
-            {brawler.team ? (
+              {brawler.team ? (
                 <div className="badge border-none badge-neutral">
-                <a
-                  className="hover:text-sky-300"
-                  href={`/team/${brawler.team.id}`}
-                >
-                  {brawler.team.name}
-                </a>
-              </div>
-            ) : undefined}
+                  <a
+                    className="hover:text-sky-300"
+                    href={`/team/${brawler.team.id}`}
+                  >
+                    {brawler.team.name}
+                  </a>
+                </div>
+              ) : undefined}
               {(userData?.data.ownedServers.length ?? 0) > 0 ? (
                 <div className="badge border-none bg-orange-300">
                   <p>Server Hoster</p>
@@ -115,10 +115,10 @@ export default async function BrawlerDetailsPage({
         </div>
       </div>
       <div className="divider" />
-      <div className="flex-1 flex flex-col gap-y-8">
-        <div className="flex-1 flex flex-col gap-y-4">
+      <div className="flex-1 flex flex-col gap-y-12">
+        <div className="flex flex-col gap-y-4">
           <h2 className="text-xl">Summary</h2>
-          <div className="flex flex-row stats w-2/5 bg-base-200">
+          <div className="w-2/3 lg:w-2/5 flex flex-col sm:flex-row stats stats-vertical sm:stats-horizontal bg-base-200">
             <div className="flex-1 stat">
               <div className="stat-title">Member Since</div>
               <div className="stat-value text-sm">
@@ -142,7 +142,7 @@ export default async function BrawlerDetailsPage({
             </div>
           </div>
         </div>
-        <div className="flex-1 flex flex-col gap-y-4">
+        <div className="flex flex-col gap-y-4">
           <h2 className="text-xl">Tournaments</h2>
           <BrawlerTournamentList brawler={brawler} tournaments={tournaments} />
         </div>
