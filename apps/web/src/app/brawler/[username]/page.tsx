@@ -1,15 +1,31 @@
-import { Routes, client } from 'discord';
+import { APIGuildMember, APIUser, Routes, client } from 'discord';
 import { TournamentStatus, prisma } from 'database';
 import { getUser, DEFAULT_AUTH_URL } from 'knockoutcity-auth-client';
 import BrawlerTournamentList from '@/components/Brawler-Tournament-List';
 import UnderConstructionAlert from '@/components/UnderConstruction';
 import moment from 'moment';
+import { environment } from '@/environment';
 
 export default async function BrawlerDetailsPage({
   params: { username },
 }: {
   params: { username: string };
 }) {
+  const badges: { [roleId: string]: { label: string; color: string } } = {
+    [environment.DISCORD_DEVELOPER_ROLE_ID]: {
+      label: 'Developer',
+      color: 'bg-[#F5F0BB]',
+    },
+    [environment.DISCORD_CONTENT_SQUAD_ROLE_ID]: {
+      label: 'Content Squad',
+      color: 'bg-[#e8a0bf]',
+    },
+    [environment.DISCORD_COMMUNITY_MANAGER_ROLE_ID]: {
+      label: 'Community Manager',
+      color: 'bg-[#C3EDC0]',
+    },
+  };
+
   const brawler = await prisma.brawler.findFirst({
     where: {
       username: {
@@ -26,7 +42,24 @@ export default async function BrawlerDetailsPage({
     return <div />;
   }
 
-  const user = await client.get(Routes.user(brawler.discordId));
+  const member: APIGuildMember = (await client
+    .get(Routes.guildMember(environment.DISCORD_GUILD_ID, brawler.discordId))
+    .catch(
+      () =>
+        ({
+          joined_at: '',
+          flags: 1,
+          deaf: false,
+          mute: false,
+          roles: [],
+        } satisfies APIGuildMember),
+    )) as APIGuildMember;
+
+  if (!member.user) {
+    member.user = (await client
+      .get(Routes.user(brawler.discordId))
+      .catch(() => undefined)) as APIUser | undefined;
+  }
 
   const tournaments = await prisma.tournament.findMany({
     where: {
@@ -70,15 +103,11 @@ export default async function BrawlerDetailsPage({
       </div>
       <div className="flex flex-col">
         <div className="flex-1 flex flex-row items-center">
-          {typeof user === 'object' &&
-          user !== undefined &&
-          user !== null &&
-          'avatar' in user &&
-          user!.avatar ? (
+          {member?.user?.avatar ? (
             <div className="avatar">
               <div className="w-12 h-12 mask mask-squircle">
                 <img
-                  src={`https://cdn.discordapp.com/avatars/${brawler.discordId}/${user.avatar}`}
+                  src={`https://cdn.discordapp.com/avatars/${brawler.discordId}/${member.user.avatar}`}
                 />
               </div>
             </div>
@@ -95,6 +124,18 @@ export default async function BrawlerDetailsPage({
           <div className="flex flex-col px-4">
             <p>{brawler.username}</p>
             <div className="flex flex-row gap-x-2">
+              {member?.roles.map((role) => {
+                const badge = badges[role];
+                if (!badge) {
+                  return undefined;
+                }
+
+                return (
+                  <div className={`badge border-none ${badge.color}`}>
+                    <p>{badge.label}</p>
+                  </div>
+                );
+              })}
               {(userData?.data.ownedServers.length ?? 0) > 0 ? (
                 <div className="badge border-none bg-orange-300">
                   <p>Server Hoster</p>
