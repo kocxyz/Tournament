@@ -71,6 +71,54 @@ export default function BracketsViewer(params: {
           <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
             ✕
           </button>
+          {params.tournament.teamSize > 1 ? (
+            <div className="flex flex-row justify-between items-center">
+              {match?.opponent1?.id ? (
+                <div className="flex-1 flex flex-col text-end">
+                  <p className="text-md font-bold">
+                    {getDBParticipantById(match.opponent1.id)?.name}
+                  </p>
+                  {getDBParticipantById(match.opponent1.id)?.brawlers.map(
+                    (b) => (
+                      <a
+                        className="hover:text-sky-300 text-gray-600"
+                        href={`/brawler/${b.username}`}
+                      >
+                        {b.username}
+                      </a>
+                    ),
+                  )}
+                </div>
+              ) : match?.opponent1 !== null ? (
+                <p className="flex-1 text-md font-bold text-end">TDB</p>
+              ) : (
+                <p className="flex-1 text-md font-bold text-end">BYE</p>
+              )}
+              <div className="flex-1 divider divider-horizontal" />
+              {match?.opponent2?.id ? (
+                <div className="flex-1 flex flex-col text-start">
+                  <p className="text-md font-bold">
+                    {getDBParticipantById(match.opponent2.id)?.name}
+                  </p>
+                  {getDBParticipantById(match.opponent2.id)?.brawlers.map(
+                    (b) => (
+                      <a
+                        className="hover:text-sky-300 text-gray-600"
+                        href={`/brawler/${b.username}`}
+                      >
+                        {b.username}
+                      </a>
+                    ),
+                  )}
+                </div>
+              ) : match?.opponent2 !== null ? (
+                <p className="flex-1 text-md font-bold text-start">TDB</p>
+              ) : (
+                <p className="flex-1 text-md font-bold text-start">BYE</p>
+              )}
+            </div>
+          ) : undefined}
+
           <div className="overflow-x-auto mt-8">
             <table className="table">
               <thead>
