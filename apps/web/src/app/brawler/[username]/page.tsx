@@ -92,10 +92,11 @@ export default async function BrawlerDetailsPage({
             </div>
           )}
 
-          <div className="flex flex-col p-4">
+          <div className="flex flex-col px-4">
             <p>{brawler.username}</p>
+            <div className="flex flex-row gap-x-2">
             {brawler.team ? (
-              <div className="badge badge-neutral">
+                <div className="badge border-none badge-neutral">
                 <a
                   className="hover:text-sky-300"
                   href={`/team/${brawler.team.id}`}
@@ -104,6 +105,12 @@ export default async function BrawlerDetailsPage({
                 </a>
               </div>
             ) : undefined}
+              {(userData?.data.ownedServers.length ?? 0) > 0 ? (
+                <div className="badge border-none bg-orange-300">
+                  <p>Server Hoster</p>
+                </div>
+              ) : undefined}
+            </div>
           </div>
         </div>
       </div>
