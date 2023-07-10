@@ -142,10 +142,15 @@ export default async function BrawlerDetailsPage({
             </div>
           </div>
         </div>
+        {tournaments.length > 0 ? (
         <div className="flex flex-col gap-y-4">
           <h2 className="text-xl">Tournaments</h2>
-          <BrawlerTournamentList brawler={brawler} tournaments={tournaments} />
+            <BrawlerTournamentList
+              brawler={brawler}
+              tournaments={tournaments}
+            />
         </div>
+        ) : undefined}
       </div>
     </div>
   );
