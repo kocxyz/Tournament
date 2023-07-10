@@ -1,9 +1,19 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Database } from 'brackets-manager';
+import { Match, MatchGame } from 'brackets-model';
+
+type MatchWithMetadata = Match & { metadata: { games: MatchGame[] } };
 
 export default function BracketsViewer(params: { data: Database }) {
+  const [match, setMatch] = useState<MatchWithMetadata | undefined>(undefined);
+
+  function handleMatchClick(match: MatchWithMetadata) {
+    setMatch(match);
+    (window as any).match_modal.showModal();
+  }
+
   useEffect(() => {
     (window as any).bracketsViewer.render(
       {
@@ -23,13 +33,86 @@ export default function BracketsViewer(params: { data: Database }) {
         separatedChildCountLabel: true,
         showSlotsOrigin: true,
         showLowerBracketSlotsOrigin: true,
+        showPopoverOnMatchLabelClick: false,
         highlightParticipantOnHover: true,
+        onMatchClick: handleMatchClick,
       },
     );
-  });
+  }, []);
+
+  const games = match?.metadata.games.sort((a, b) =>
+    a.number < b.number ? -1 : 0,
+  );
+
+  const opponent1 = params.data.participant.find(
+    (p) => p.id === match?.opponent1?.id,
+  );
+
+  const opponent2 = params.data.participant.find(
+    (p) => p.id === match?.opponent2?.id,
+  );
 
   return (
     <>
+      <dialog id="match_modal" className="modal modal-bottom sm:modal-middle">
+        <form method="dialog" className="modal-box min-w-[50%]">
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            ✕
+          </button>
+          <div className="overflow-x-auto mt-8">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th className="min-w-[20%]"></th>
+                  {match?.metadata.games.map((_, index) => (
+                    <th>Match {index + 1}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>
+                    {opponent1 ? (
+                      <a
+                        className="hover:text-sky-300"
+                        href={`/team/${opponent1.id}`}
+                      >
+                        {opponent1.name}
+                      </a>
+                    ) : (
+                      'BYE'
+                    )}
+                  </th>
+                  {games?.map((game) => (
+                    <td>{game.opponent1?.score ?? '-'}</td>
+                  ))}
+                </tr>
+                <tr>
+                  <th>
+                    {opponent2 ? (
+                      <a
+                        className="hover:text-sky-300"
+                        href={`/team/${opponent2.id}`}
+                      >
+                        {opponent2.name}
+                      </a>
+                    ) : (
+                      'BYE'
+                    )}
+                  </th>
+                  {games?.map((game) => (
+                    <td>{game.opponent2?.score ?? '-'}</td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
+
       <div
         id="root"
         className="flex items-center justify-center brackets-viewer"
