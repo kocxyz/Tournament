@@ -1,7 +1,9 @@
 import { Routes, client } from 'discord';
 import { TournamentStatus, prisma } from 'database';
+import { getUser, DEFAULT_AUTH_URL } from 'knockoutcity-auth-client';
 import BrawlerTournamentList from '@/components/Brawler-Tournament-List';
 import UnderConstructionAlert from '@/components/UnderConstruction';
+import moment from 'moment';
 
 export default async function BrawlerDetailsPage({
   params: { username },
@@ -57,6 +59,10 @@ export default async function BrawlerDetailsPage({
     },
   });
 
+  const userData = await getUser(DEFAULT_AUTH_URL, brawler.discordId).catch(
+    () => null,
+  );
+
   return (
     <div className="flex-1 flex flex-col py-12 mx-12 md:mx-64">
       <div className="mb-12">
@@ -102,8 +108,38 @@ export default async function BrawlerDetailsPage({
         </div>
       </div>
       <div className="divider" />
-      <h2 className="text-xl">Tournaments</h2>
-      <BrawlerTournamentList brawler={brawler} tournaments={tournaments} />
+      <div className="flex-1 flex flex-col gap-y-8">
+        <div className="flex-1 flex flex-col gap-y-4">
+          <h2 className="text-xl">Summary</h2>
+          <div className="flex flex-row stats w-2/5 bg-base-200">
+            <div className="flex-1 stat">
+              <div className="stat-title">Member Since</div>
+              <div className="stat-value text-sm">
+                {userData
+                  ? moment(Date.parse(userData?.data.registeredat)).format(
+                      'DD / MM / YYYY',
+                    )
+                  : '-'}
+              </div>
+            </div>
+
+            <div className="flex-1 stat">
+              <div className="stat-title">Last Seen</div>
+              <div className="stat-value text-sm">
+                {userData
+                  ? moment(Date.parse(userData?.data.lastlogin)).format(
+                      'DD / MM / YYYY',
+                    )
+                  : '-'}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 flex flex-col gap-y-4">
+          <h2 className="text-xl">Tournaments</h2>
+          <BrawlerTournamentList brawler={brawler} tournaments={tournaments} />
+        </div>
+      </div>
     </div>
   );
 }
