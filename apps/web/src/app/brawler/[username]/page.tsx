@@ -18,11 +18,15 @@ export default async function BrawlerDetailsPage({
     },
     [environment.DISCORD_CONTENT_SQUAD_ROLE_ID]: {
       label: 'Content Squad',
-      color: 'bg-[#e8a0bf]',
+      color: 'bg-[#E8A0BF]',
     },
     [environment.DISCORD_COMMUNITY_MANAGER_ROLE_ID]: {
       label: 'Community Manager',
       color: 'bg-[#C3EDC0]',
+    },
+    [environment.DISCORD_MODDING_RESEARCHER_ROLE_ID]: {
+      label: 'Modding Researcher',
+      color: 'bg-[#7CCECE]',
     },
   };
 
