@@ -11,22 +11,35 @@ export default async function BrawlerDetailsPage({
 }: {
   params: { username: string };
 }) {
-  const badges: { [roleId: string]: { label: string; color: string } } = {
+  const badges: {
+    [roleId: string]: {
+      label: string;
+      color: string;
+      description: string;
+    };
+  } = {
     [environment.DISCORD_DEVELOPER_ROLE_ID]: {
       label: 'Developer',
       color: 'bg-[#F5F0BB]',
+      description:
+        'This user creates and/or maintaines tools for the Knockout City Private Server Build.',
     },
     [environment.DISCORD_CONTENT_SQUAD_ROLE_ID]: {
       label: 'Content Squad',
       color: 'bg-[#E8A0BF]',
+      description:
+        'This user creates content and spreads the word of Knockout City Private Server Build.',
     },
     [environment.DISCORD_COMMUNITY_MANAGER_ROLE_ID]: {
       label: 'Community Manager',
       color: 'bg-[#C3EDC0]',
+      description: 'This user keeps the community safe.',
     },
     [environment.DISCORD_MODDING_RESEARCHER_ROLE_ID]: {
       label: 'Modding Researcher',
       color: 'bg-[#7CCECE]',
+      description:
+        'This user is activly involved in researching modding capabilities.',
     },
   };
 
@@ -135,8 +148,10 @@ export default async function BrawlerDetailsPage({
                 }
 
                 return (
-                  <div className={`badge border-none ${badge.color}`}>
-                    <p>{badge.label}</p>
+                  <div className="tooltip" data-tip={badge.description}>
+                    <div className={`badge border-none ${badge.color}`}>
+                      <p>{badge.label}</p>
+                    </div>
                   </div>
                 );
               })}
