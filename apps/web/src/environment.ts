@@ -8,4 +8,5 @@ export const environment = load({
   DISCORD_DEVELOPER_ROLE_ID: String,
   DISCORD_MODDING_RESEARCHER_ROLE_ID: String,
   DISCORD_SERVER_HOSTER_ROLE_ID: String,
+  DISCORD_SERVER_BOOSTER_ROLE_ID: String,
 });
