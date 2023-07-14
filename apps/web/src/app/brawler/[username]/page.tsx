@@ -20,7 +20,7 @@ export default async function BrawlerDetailsPage({
   } = {
     [environment.DISCORD_DEVELOPER_ROLE_ID]: {
       label: 'Developer',
-      color: 'bg-[#F5F0BB]',
+      color: 'bg-[#FAE392]',
       description:
         'This user creates and/or maintaines tools for the Knockout City Private Server Build.',
     },
@@ -40,6 +40,11 @@ export default async function BrawlerDetailsPage({
       color: 'bg-[#7CCECE]',
       description:
         'This user is activly involved in researching modding capabilities.',
+    },
+    [environment.DISCORD_SERVER_HOSTER_ROLE_ID]: {
+      label: 'Server Hoster',
+      color: 'bg-[#FFB07F]',
+      description: 'This user hosts a public server to brawl on.',
     },
   };
 
@@ -155,11 +160,6 @@ export default async function BrawlerDetailsPage({
                   </div>
                 );
               })}
-              {(userData?.data.ownedServers.length ?? 0) > 0 ? (
-                <div className="badge border-none bg-orange-300">
-                  <p>Server Hoster</p>
-                </div>
-              ) : undefined}
             </div>
           </div>
         </div>
