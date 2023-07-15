@@ -19,3 +19,8 @@
 body {
   background: #e9e9e9;
 }
+
+@font-face {
+  font-family: 'Baloo';
+  src: url('/fonts/Baloo-Regular.ttf') format('truetype'),
+}
