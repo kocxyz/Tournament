@@ -1,6 +1,7 @@
 import TeamTeamMemberList from '@/components/Team-Member-List';
 import TeamTournamentList from '@/components/Team-Tournament-List';
 import UnderConstructionAlert from '@/components/UnderConstruction';
+import TeamAvatar from '@/components/display/TeamAvatar';
 import { TournamentStatus, prisma } from 'database';
 
 export default async function BrawlerDetailsPage({
@@ -52,13 +53,7 @@ export default async function BrawlerDetailsPage({
       </div>
       <div className="flex flex-col">
         <div className="flex-1 flex flex-row items-center">
-          <div className="avatar placeholder">
-            <div className="bg-neutral-focus text-neutral-content rounded-full w-12 h-12">
-              <span className="text-xl">
-                {team.name.charAt(0).toUpperCase()}
-              </span>
-            </div>
-          </div>
+          <TeamAvatar team={team} />
           <p className="p-4">{team.name}</p>
         </div>
       </div>

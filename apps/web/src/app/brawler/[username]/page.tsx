@@ -2,6 +2,7 @@ import { APIGuildMember, APIUser, Routes, client } from 'discord';
 import { TournamentStatus, prisma } from 'database';
 import { getUser, DEFAULT_AUTH_URL } from 'knockoutcity-auth-client';
 import BrawlerTournamentList from '@/components/Brawler-Tournament-List';
+import BrawlerAvatar from '@/components/display/BrawlerAvatar';
 import UnderConstructionAlert from '@/components/UnderConstruction';
 import moment from 'moment';
 import { environment } from '@/environment';
@@ -125,23 +126,8 @@ export default async function BrawlerDetailsPage({
       </div>
       <div className="flex flex-col">
         <div className="flex-1 flex flex-row items-center">
-          {member?.user?.avatar ? (
-            <div className="avatar">
-              <div className="w-12 h-12 mask mask-squircle">
-                <img
-                  src={`https://cdn.discordapp.com/avatars/${brawler.discordId}/${member.user.avatar}`}
-                />
-              </div>
-            </div>
-          ) : (
-            <div className="avatar placeholder">
-              <div className="bg-neutral-focus text-neutral-content rounded-full w-12 h-12">
-                <span className="text-xl">
-                  {brawler.username.charAt(0).toUpperCase()}
-                </span>
-              </div>
-            </div>
-          )}
+          <BrawlerAvatar brawler={brawler} member={member} />
+
           <div className="flex flex-col px-4">
             <div className="flex flex-row items-center gap-x-1">
               <p>{brawler.username}</p>
