@@ -2,8 +2,11 @@
 
 import React from 'react';
 import BrawlerSearch from './BrawlerSearch';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
+  const path = usePathname();
+
   return (
     <div className="flex flex-row justify-between navbar bg-base-100 px-8">
       <a
@@ -12,8 +15,8 @@ export default function Navbar() {
       >
         Brawler
       </a>
-      {window.location.pathname !== '/' ? (
-        <div className="hidden lg:flex">
+      {path !== '/' ? (
+        <div className="hidden lg:flex flex-1">
           <BrawlerSearch />
         </div>
       ) : undefined}
