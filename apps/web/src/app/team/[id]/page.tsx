@@ -1,7 +1,7 @@
 import TeamTeamMemberList from '@/components/Team-Member-List';
 import TeamTournamentList from '@/components/Team-Tournament-List';
 import UnderConstructionAlert from '@/components/UnderConstruction';
-import TeamAvatar from '@/components/display/TeamAvatar';
+import TeamAvatar from '@/components/display/avatar/TeamAvatar';
 import { TournamentStatus, prisma } from 'database';
 
 export default async function BrawlerDetailsPage({

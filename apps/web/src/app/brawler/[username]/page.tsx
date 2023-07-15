@@ -2,10 +2,12 @@ import { APIGuildMember, APIUser, Routes, client } from 'discord';
 import { TournamentStatus, prisma } from 'database';
 import { getUser, DEFAULT_AUTH_URL } from 'knockoutcity-auth-client';
 import BrawlerTournamentList from '@/components/Brawler-Tournament-List';
-import BrawlerAvatar from '@/components/display/BrawlerAvatar';
+import BrawlerAvatar from '@/components/display/avatar/BrawlerAvatar';
+import TooltipBadge, { Badge } from '@/components/display/badge/TooltipBadge';
+import DiscordNitroIcon from '@/components/display/DiscordNitroIcon';
 import UnderConstructionAlert from '@/components/UnderConstruction';
-import moment from 'moment';
 import { environment } from '@/environment';
+import BrawlerStats from '@/components/display/stats/BrawlerStats';
 
 export default async function BrawlerDetailsPage({
   params: { username },
@@ -13,37 +15,33 @@ export default async function BrawlerDetailsPage({
   params: { username: string };
 }) {
   const badges: {
-    [roleId: string]: {
-      label: string | JSX.Element;
-      color: string;
-      description: string;
-    };
+    [roleId: string]: Badge;
   } = {
     [environment.DISCORD_DEVELOPER_ROLE_ID]: {
-      label: 'Developer',
+      content: 'Developer',
       color: 'bg-[#FAE392]',
       description:
         'This user creates and/or maintaines tools for the Knockout City Private Server Build.',
     },
     [environment.DISCORD_CONTENT_SQUAD_ROLE_ID]: {
-      label: 'Content Squad',
+      content: 'Content Squad',
       color: 'bg-[#E8A0BF]',
       description:
         'This user creates content and spreads the word of Knockout City Private Server Build.',
     },
     [environment.DISCORD_COMMUNITY_MANAGER_ROLE_ID]: {
-      label: 'Community Manager',
+      content: 'Community Manager',
       color: 'bg-[#C3EDC0]',
       description: 'This user keeps the community safe.',
     },
     [environment.DISCORD_MODDING_RESEARCHER_ROLE_ID]: {
-      label: 'Modding Researcher',
+      content: 'Modding Researcher',
       color: 'bg-[#7CCECE]',
       description:
         'This user is activly involved in researching modding capabilities.',
     },
     [environment.DISCORD_SERVER_HOSTER_ROLE_ID]: {
-      label: 'Server Hoster',
+      content: 'Server Hoster',
       color: 'bg-[#FFB07F]',
       description: 'This user hosts a public server to brawl on.',
     },
@@ -135,18 +133,7 @@ export default async function BrawlerDetailsPage({
                 environment.DISCORD_SERVER_BOOSTER_ROLE_ID,
               ) ? (
                 <div className="tooltip" data-tip="kocity.xyz Server Booster">
-                  <div className="text-[#FA73FF]">
-                    <svg role="img" width="16" height="16" viewBox="0 0 8 12">
-                      <path
-                        d="M4 0L0 4V8L4 12L8 8V4L4 0ZM7 7.59L4 10.59L1 7.59V4.41L4 1.41L7 4.41V7.59Z"
-                        fill="currentColor"
-                      ></path>
-                      <path
-                        d="M2 4.83V7.17L4 9.17L6 7.17V4.83L4 2.83L2 4.83Z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                  </div>
+                  <DiscordNitroIcon />
                 </div>
               ) : undefined}
             </div>
@@ -157,13 +144,7 @@ export default async function BrawlerDetailsPage({
                   return undefined;
                 }
 
-                return (
-                  <div className="tooltip" data-tip={badge.description}>
-                    <div className={`badge border-none ${badge.color}`}>
-                      <p>{badge.label}</p>
-                    </div>
-                  </div>
-                );
+                return <TooltipBadge badge={badge} />;
               })}
             </div>
           </div>
@@ -173,45 +154,7 @@ export default async function BrawlerDetailsPage({
       <div className="flex-1 flex flex-col gap-y-12">
         <div className="flex flex-col gap-y-4">
           <h2 className="text-xl">Summary</h2>
-          <div className="flex flex-col sm:flex-row stats stats-vertical sm:stats-horizontal bg-base-200">
-            <div className="flex-1 stat">
-              <div className="stat-title">Member Since</div>
-              <div className="stat-value text-sm">
-                {userData
-                  ? moment(Date.parse(userData?.data.registeredat)).format(
-                      'DD / MM / YYYY',
-                    )
-                  : '-'}
-              </div>
-            </div>
-
-            <div className="flex-1 stat">
-              <div className="stat-title">Last Seen</div>
-              <div className="stat-value text-sm">
-                {userData
-                  ? moment(Date.parse(userData?.data.lastlogin)).format(
-                      'DD / MM / YYYY',
-                    )
-                  : '-'}
-              </div>
-            </div>
-
-            <div className="flex-1 stat">
-              <div className="stat-title">Team</div>
-              <div className="stat-value text-sm">
-                {brawler.team ? (
-                  <a
-                    className="hover:text-sky-300"
-                    href={`/team/${brawler.team.id}`}
-                  >
-                    {brawler.team.name}
-                  </a>
-                ) : (
-                  '-'
-                )}
-              </div>
-            </div>
-          </div>
+          <BrawlerStats brawler={brawler} kocUser={userData?.data} />
         </div>
         {tournaments.length > 0 ? (
           <div className="flex flex-col gap-y-4">
