@@ -8,6 +8,7 @@ import DiscordNitroIcon from '@/components/display/DiscordNitroIcon';
 import UnderConstructionAlert from '@/components/UnderConstruction';
 import { environment } from '@/environment';
 import BrawlerStats from '@/components/display/stats/BrawlerStats';
+import { notFound } from 'next/navigation';
 
 export default async function BrawlerDetailsPage({
   params: { username },
@@ -60,7 +61,7 @@ export default async function BrawlerDetailsPage({
   });
 
   if (brawler === null) {
-    return <div />;
+    return notFound();
   }
 
   const member: APIGuildMember = (await client

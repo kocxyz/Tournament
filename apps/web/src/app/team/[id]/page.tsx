@@ -3,6 +3,7 @@ import TeamTournamentList from '@/components/Team-Tournament-List';
 import UnderConstructionAlert from '@/components/UnderConstruction';
 import TeamAvatar from '@/components/display/avatar/TeamAvatar';
 import { TournamentStatus, prisma } from 'database';
+import { notFound } from 'next/navigation';
 
 export default async function BrawlerDetailsPage({
   params: { id },
@@ -17,7 +18,7 @@ export default async function BrawlerDetailsPage({
   });
 
   if (team === null) {
-    return <div />;
+    return notFound();
   }
 
   const tournaments = await prisma.tournament.findMany({

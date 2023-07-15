@@ -2,6 +2,7 @@ import BracketsViewers from '@/components/Brackets-Viewer';
 import UnderConstructionAlert from '@/components/UnderConstruction';
 import { manager } from 'brackets';
 import { prisma } from 'database';
+import { notFound } from 'next/navigation';
 
 export default async function TournamentDetailsPage({
   params: { id },
@@ -20,7 +21,7 @@ export default async function TournamentDetailsPage({
   });
 
   if (tournament === null) {
-    return <div>Tournament not found!</div>;
+    return notFound();
   }
 
   const data = await manager.get.tournamentData(tournament.managerTournamentId);
