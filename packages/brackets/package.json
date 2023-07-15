@@ -7,7 +7,7 @@
   "main": "src/index.ts",
   "scripts": {},
   "dependencies": {
-    "brackets-manager": "^1.6.1",
+    "brackets-manager": "^1.6.3",
     "brackets-prisma-db": "^1.0.1",
     "database": "^1.0.0",
     "typescript": "^5.1.6"
