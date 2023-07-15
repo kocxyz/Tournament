@@ -137,7 +137,7 @@ export default async function BrawlerDetailsPage({
                 </div>
               ) : undefined}
             </div>
-            <div className="flex flex-row gap-x-2">
+            <div className="lg:flex lg:flex-row gap-x-2">
               {member?.roles.map((role) => {
                 const badge = badges[role];
                 if (!badge) {
