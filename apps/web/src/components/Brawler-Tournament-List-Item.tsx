@@ -66,7 +66,7 @@ export default async function BrawlerTournamentListItem(params: {
               {team.name}
             </a>
           ) : (
-            '-'
+            params.participant.name
           )}
         </p>
       </td>
