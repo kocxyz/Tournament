@@ -2,12 +2,14 @@
   "name": "knockoutcity-xyz-tournament",
   "private": true,
   "scripts": {
+    "postinstall": "patch-package",
     "start": "turbo run start",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "@turbo/gen": "^1.9.7",
     "dotenv-cli": "^7.2.1",
+    "patch-package": "^7.0.2",
     "prettier": "^2.5.1",
     "turbo": "latest"
   },

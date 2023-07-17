@@ -1,0 +1,116 @@
+diff --git a/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/group.js b/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/group.js
+index 635f69b..2996b8f 100644
+--- a/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/group.js
++++ b/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/group.js
+@@ -6,7 +6,7 @@ async function handleGroupSelect(prisma, filter) {
+     if (filter === undefined) {
+         // Query all entries of table
+         return prisma.group
+-            .findMany()
++            .findMany({ orderBy: [{ number: 'asc' }] })
+             .then((values) => values.map(transformers_1.GroupTransformer.from))
+             .catch(() => []);
+     }
+@@ -31,6 +31,7 @@ async function handleGroupSelect(prisma, filter) {
+             stageId: filter.stage_id,
+             number: filter.number,
+         },
++        orderBy: [{ number: 'asc' }],
+     })
+         .then((values) => values.map(transformers_1.GroupTransformer.from))
+         .catch(() => []);
+diff --git a/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/match-game.js b/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/match-game.js
+index c3127d7..758cb9f 100644
+--- a/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/match-game.js
++++ b/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/match-game.js
+@@ -11,6 +11,7 @@ async function handleMatchGameSelect(prisma, filter) {
+                 opponent1Result: true,
+                 opponent2Result: true,
+             },
++            orderBy: [{ number: 'asc' }],
+         })
+             .then((values) => values.map(transformers_1.MatchGameTransformer.from))
+             .catch(() => []);
+@@ -48,6 +49,7 @@ async function handleMatchGameSelect(prisma, filter) {
+             opponent1Result: true,
+             opponent2Result: true,
+         },
++        orderBy: [{ number: 'asc' }],
+     })
+         .then((values) => values.map(transformers_1.MatchGameTransformer.from))
+         .catch(() => []);
+diff --git a/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/match.js b/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/match.js
+index 8cdc559..f953522 100644
+--- a/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/match.js
++++ b/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/match.js
+@@ -11,6 +11,14 @@ async function handleMatchSelect(prisma, filter) {
+                 opponent1Result: true,
+                 opponent2Result: true,
+             },
++            orderBy: [
++                {
++                    round: {
++                        number: 'asc',
++                    },
++                },
++                { number: 'asc' },
++            ],
+         })
+             .then((values) => values.map(transformers_1.MatchTransformer.from))
+             .catch(() => []);
+@@ -50,6 +58,14 @@ async function handleMatchSelect(prisma, filter) {
+             opponent1Result: true,
+             opponent2Result: true,
+         },
++        orderBy: [
++            {
++                round: {
++                    number: 'asc',
++                },
++            },
++            { number: 'asc' },
++        ],
+     })
+         .then((values) => values.map(transformers_1.MatchTransformer.from))
+         .catch(() => []);
+diff --git a/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/round.js b/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/round.js
+index 4e86048..69b2bd1 100644
+--- a/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/round.js
++++ b/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/round.js
+@@ -6,7 +6,7 @@ async function handleRoundSelect(prisma, filter) {
+     if (filter === undefined) {
+         // Query all entries of table
+         return prisma.round
+-            .findMany()
++            .findMany({ orderBy: [{ number: 'asc' }] })
+             .then((values) => values.map(transformers_1.RoundTransformer.from))
+             .catch(() => []);
+     }
+@@ -32,6 +32,7 @@ async function handleRoundSelect(prisma, filter) {
+             groupId: filter.group_id,
+             number: filter.number,
+         },
++        orderBy: [{ number: 'asc' }],
+     })
+         .then((values) => values.map(transformers_1.RoundTransformer.from))
+         .catch(() => []);
+diff --git a/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/stage.js b/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/stage.js
+index 26e5ca3..10e81d2 100644
+--- a/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/stage.js
++++ b/node_modules/brackets-prisma-db/dist/storage-handlers/select-handlers/stage.js
+@@ -10,6 +10,7 @@ async function handleStageSelect(prisma, filter) {
+             include: {
+                 settings: true,
+             },
++            orderBy: [{ number: 'asc' }],
+         })
+             .then((values) => values.map((value) => {
+             if (value.settings === null) {
+@@ -53,6 +54,7 @@ async function handleStageSelect(prisma, filter) {
+         include: {
+             settings: true,
+         },
++        orderBy: [{ number: 'asc' }],
+     })
+         .then((values) => values.map((value) => {
+         if (value.settings === null) {
