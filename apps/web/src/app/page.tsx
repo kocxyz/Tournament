@@ -1,21 +1,10 @@
 'use client';
 
 import BrawlerSearch from '@/components/BrawlerSearch';
+import { Baloo } from '@/fonts';
 import React from 'react';
 
 export default function Home() {
-  const brawlerInputRef = React.createRef<HTMLInputElement>();
-
-  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === 'Enter') {
-      handleClick();
-    }
-  }
-
-  function handleClick() {
-    window.location.href = `/brawler/${brawlerInputRef.current?.value}`;
-  }
-
   return (
     <main className="flex-1 flex flex-col items-center justify-center">
       <div
@@ -29,7 +18,7 @@ export default function Home() {
         <div className="hero-content text-center">
           <div className="flex flex-col gap-y-4 max-w-lg">
             <div className="flex flex-col gap-y-4 text-white">
-              <h1 className="text-5xl font-bold font-[Baloo]">
+              <h1 className={`text-5xl font-bold ${Baloo.className}`}>
                 The Brawl continues!
               </h1>
             </div>
