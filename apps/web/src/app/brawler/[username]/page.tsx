@@ -137,6 +137,19 @@ export default async function BrawlerDetailsPage({
                   <DiscordNitroIcon />
                 </div>
               ) : undefined}
+              {userData?.data.id === '659767172708564993' ? (
+                <div
+                  className="tooltip"
+                  data-tip="This user played a huge role to make modding possible."
+                >
+                  <img
+                    src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Hammer%20and%20Wrench.png"
+                    alt="Hammer and Wrench"
+                    width="25"
+                    height="25"
+                  />
+                </div>
+              ) : undefined}
             </div>
             <div className="lg:flex lg:flex-row gap-x-2">
               {member?.roles.map((role) => {
