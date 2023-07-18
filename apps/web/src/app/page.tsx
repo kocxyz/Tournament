@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main className="flex-1 flex flex-col items-center justify-center">
       <div
-        className="hero flex-1"
+        className="min-h-[93vh] hero flex-1"
         style={{
           backgroundImage:
             'url(https://static1.thegamerimages.com/wordpress/wp-content/uploads/2022/02/KnockoutCity.jpg?q=50&fit=contain&w=1140&h=570&dpr=1.5)',

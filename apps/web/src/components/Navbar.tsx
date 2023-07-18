@@ -9,7 +9,7 @@ export default function Navbar() {
   const path = usePathname();
 
   return (
-    <div className="flex flex-row justify-between navbar bg-base-100 px-8">
+    <div className="min-h-[7vh] max-h-[7vh] flex flex-row justify-between navbar bg-base-100 px-8">
       <a
         className={`${Baloo.className} normal-case text-3xl hover:text-slate-600`}
         href="/"

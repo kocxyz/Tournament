@@ -16,7 +16,7 @@ export default function RootLayout({
       <body className={`flex flex-col min-h-screen`}>
         <Navbar />
         {children}
-        <footer className="footer items-center justify-center p-4 bg-neutral text-neutral-content">
+        <footer className="min-h-[7vh] max-h-[7vh] footer items-center justify-center p-4 bg-neutral text-neutral-content">
           <p>Copyright © 2023 - All right reserved</p>
         </footer>
       </body>

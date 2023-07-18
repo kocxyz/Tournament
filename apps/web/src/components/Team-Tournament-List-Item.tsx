@@ -1,18 +1,6 @@
 import React from 'react';
-import {
-  Participant,
-  Stage,
-  Team,
-  Tournament,
-  TournamentStatus,
-} from 'database';
-import { manager, FinalStandingsItem } from 'brackets';
-
-function getNumberWithOrdinal(n: number): string {
-  var s = ['th', 'st', 'nd', 'rd'],
-    v = n % 100;
-  return n + (s[(v - 20) % 10] || s[v] || s[0]);
-}
+import { Participant, Stage, Team, Tournament } from 'database';
+import { getRank, getRankIcon } from '@/utils';
 
 export default async function TeamTournamentListItem(params: {
   tournament: Tournament & { stages: Stage[] };
@@ -31,21 +19,15 @@ export default async function TeamTournamentListItem(params: {
     return <div />;
   }
 
-  const standings =
-    params.tournament.status === TournamentStatus.FINISHED
-      ? await manager.get.finalStandings(stage.id)
-      : [];
-  const rank = standings.reduce<FinalStandingsItem | null>((acc, cur) => {
-    if (cur.id === params.participant.id) {
-      return cur;
-    }
-
-    return acc;
-  }, null);
+  const rank = await getRank(
+    stage.id,
+    params.participant.id,
+    params.tournament,
+  );
 
   return (
     <tr className="bg-base-200">
-      <th>{rank ? getNumberWithOrdinal(rank.rank) : '-'}</th>
+      <th>{getRankIcon(rank)}</th>
       <td>
         <a
           className="hover:text-sky-300 text-gray-600"
