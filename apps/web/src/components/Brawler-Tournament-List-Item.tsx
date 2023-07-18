@@ -46,8 +46,10 @@ export default async function BrawlerTournamentListItem(params: {
             >
               {team.name}
             </a>
-          ) : (
+          ) : params.tournament.teamSize > 1 ? (
             params.participant.name
+          ) : (
+            '-'
           )}
         </p>
       </td>
