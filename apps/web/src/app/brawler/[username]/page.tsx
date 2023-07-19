@@ -1,6 +1,6 @@
 import { APIGuildMember, APIUser, Routes, client } from 'discord';
 import { TournamentStatus, prisma } from 'database';
-import { getUser, DEFAULT_AUTH_URL } from 'knockoutcity-auth-client';
+import { getUserById, DEFAULT_AUTH_URL } from 'knockoutcity-auth-client';
 import BrawlerTournamentList from '@/components/Brawler-Tournament-List';
 import BrawlerAvatar from '@/components/display/avatar/BrawlerAvatar';
 import TooltipBadge, { Badge } from '@/components/display/badge/TooltipBadge';
@@ -114,7 +114,7 @@ export default async function BrawlerDetailsPage({
     },
   });
 
-  const userData = await getUser(DEFAULT_AUTH_URL, brawler.discordId).catch(
+  const userData = await getUserById(DEFAULT_AUTH_URL, brawler.discordId).catch(
     () => null,
   );
 
