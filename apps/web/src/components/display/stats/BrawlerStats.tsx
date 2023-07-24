@@ -14,13 +14,13 @@ export default function BrawlerStats({
     <div className="flex flex-col sm:flex-row stats stats-vertical sm:stats-horizontal bg-base-200">
       <BrawlerStatsItem title="Member Since">
         {kocUser
-          ? moment(Date.parse(kocUser.registeredat)).format('DD / MM / YYYY')
+          ? moment(Date.parse(kocUser.user.registeredat)).format('DD / MM / YYYY')
           : '-'}
       </BrawlerStatsItem>
 
       <BrawlerStatsItem title="Last Seen">
         {kocUser
-          ? moment(Date.parse(kocUser.lastlogin)).format('DD / MM / YYYY')
+          ? moment(Date.parse(kocUser.user.lastlogin)).format('DD / MM / YYYY')
           : '-'}
       </BrawlerStatsItem>
 

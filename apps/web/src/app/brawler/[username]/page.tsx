@@ -137,7 +137,7 @@ export default async function BrawlerDetailsPage({
                   <DiscordNitroIcon />
                 </div>
               ) : undefined}
-              {userData?.data.id === '659767172708564993' ? (
+              {userData?.data.user.id === '659767172708564993' ? (
                 <div
                   className="tooltip"
                   data-tip="This user played a huge role to make modding possible."
