@@ -6,8 +6,8 @@ import BrawlerAvatar from '@/components/display/avatar/BrawlerAvatar';
 import TooltipBadge, { Badge } from '@/components/display/badge/TooltipBadge';
 import DiscordNitroIcon from '@/components/display/DiscordNitroIcon';
 import UnderConstructionAlert from '@/components/UnderConstruction';
-import { environment } from '@/environment';
 import BrawlerStats from '@/components/display/stats/BrawlerStats';
+import { environment } from '@/environment';
 import { notFound } from 'next/navigation';
 
 export default async function BrawlerDetailsPage({
@@ -15,7 +15,7 @@ export default async function BrawlerDetailsPage({
 }: {
   params: { username: string };
 }) {
-  const badges: {
+  const roleBadges: {
     [roleId: string]: Badge;
   } = {
     [environment.DISCORD_FOUNDER_ROLE_ID]: {
@@ -125,7 +125,22 @@ export default async function BrawlerDetailsPage({
 
           <div className="flex flex-col px-4">
             <div className="flex flex-row items-center gap-x-1">
-              <p>{brawler.username}</p>
+              <p style={{ color: userData?.data.user.color ?? undefined }}>
+                {brawler.username}
+              </p>
+              {userData && userData?.data.user.premium > 0 ? (
+                <div
+                  className="tooltip"
+                  data-tip={`This user is a Tier ${userData.data.user.premium} Patreon.`}
+                >
+                  <img
+                    src={`/images/patreon-${userData.data.user.premium}.webp`}
+                    alt="Patreon Icon"
+                    width="25"
+                    height="25"
+                  />
+                </div>
+              ) : undefined}
               {member?.roles.includes(
                 environment.DISCORD_SERVER_BOOSTER_ROLE_ID,
               ) ? (
@@ -149,7 +164,7 @@ export default async function BrawlerDetailsPage({
             </div>
             <div className="lg:flex lg:flex-row gap-x-2">
               {member?.roles.map((role) => {
-                const badge = badges[role];
+                const badge = roleBadges[role];
                 if (!badge) {
                   return undefined;
                 }

@@ -15,7 +15,7 @@
     "browserify-zlib": "^0.2.0",
     "database": "*",
     "discord": "*",
-    "knockoutcity-auth-client": "^1.0.0-alpha.4",
+    "knockoutcity-auth-client": "^1.0.1",
     "moment": "^2.29.4",
     "next": "^13.4.1",
     "react": "^18.2.0",
