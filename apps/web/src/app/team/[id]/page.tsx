@@ -2,7 +2,7 @@ import TeamTeamMemberList from '@/components/Team-Member-List';
 import TeamTournamentList from '@/components/Team-Tournament-List';
 import UnderConstructionAlert from '@/components/UnderConstruction';
 import TeamAvatar from '@/components/display/avatar/TeamAvatar';
-import { TournamentStatus, prisma } from 'database';
+import { prisma } from 'database';
 import { notFound } from 'next/navigation';
 
 export default async function BrawlerDetailsPage({
@@ -27,9 +27,6 @@ export default async function BrawlerDetailsPage({
         some: {
           teamId: team.id,
         },
-      },
-      status: {
-        in: [TournamentStatus.IN_PROGRESS, TournamentStatus.FINISHED],
       },
     },
     include: {

@@ -1,5 +1,5 @@
 import { APIGuildMember, APIUser, Routes, client } from 'discord';
-import { TournamentStatus, prisma } from 'database';
+import { prisma } from 'database';
 import { getUserById, DEFAULT_AUTH_URL } from 'knockoutcity-auth-client';
 import BrawlerTournamentList from '@/components/Brawler-Tournament-List';
 import BrawlerAvatar from '@/components/display/avatar/BrawlerAvatar';
@@ -93,9 +93,6 @@ export default async function BrawlerDetailsPage({
             },
           },
         },
-      },
-      status: {
-        in: [TournamentStatus.IN_PROGRESS, TournamentStatus.FINISHED],
       },
     },
     include: {
