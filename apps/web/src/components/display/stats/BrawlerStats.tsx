@@ -27,6 +27,10 @@ export default function BrawlerStats({
           : '-'}
       </BrawlerStatsItem>
 
+      <BrawlerStatsItem title="Playtime">
+        {`${kocUser?.user.playtime} Minutes` ?? '-'}
+      </BrawlerStatsItem>
+
       <BrawlerStatsItem title="Team">
         {brawler.team ? <TeamLink team={brawler.team} /> : '-'}
       </BrawlerStatsItem>
