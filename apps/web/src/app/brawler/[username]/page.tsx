@@ -18,11 +18,10 @@ export default async function BrawlerDetailsPage({
   const badges: {
     [roleId: string]: Badge;
   } = {
-    [environment.DISCORD_DEVELOPER_ROLE_ID]: {
-      content: 'Developer',
+    [environment.DISCORD_FOUNDER_ROLE_ID]: {
+      content: 'Founder',
       color: 'bg-[#FAE392]',
-      description:
-        'This user creates and/or maintaines tools for the Knockout City Private Server Build.',
+      description: 'This user is a founding Member of KOCity.xyz.',
     },
     [environment.DISCORD_CONTENT_SQUAD_ROLE_ID]: {
       content: 'Content Squad',
