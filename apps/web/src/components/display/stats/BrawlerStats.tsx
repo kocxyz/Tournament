@@ -2,6 +2,7 @@ import type { Brawler, Team } from 'database';
 import type { KOCUser } from 'knockoutcity-auth-client';
 import moment from 'moment';
 import BrawlerStatsItem from './BrawlerStatsItem';
+import TeamLink from '../link/TeamLink';
 
 export default function BrawlerStats({
   brawler,
@@ -14,7 +15,9 @@ export default function BrawlerStats({
     <div className="flex flex-col sm:flex-row stats stats-vertical sm:stats-horizontal bg-base-200">
       <BrawlerStatsItem title="Member Since">
         {kocUser
-          ? moment(Date.parse(kocUser.user.registeredat)).format('DD / MM / YYYY')
+          ? moment(Date.parse(kocUser.user.registeredat)).format(
+              'DD / MM / YYYY',
+            )
           : '-'}
       </BrawlerStatsItem>
 
@@ -25,13 +28,7 @@ export default function BrawlerStats({
       </BrawlerStatsItem>
 
       <BrawlerStatsItem title="Team">
-        {brawler.team ? (
-          <a className="hover:text-sky-300" href={`/team/${brawler.team.id}`}>
-            {brawler.team.name}
-          </a>
-        ) : (
-          '-'
-        )}
+        {brawler.team ? <TeamLink team={brawler.team} /> : '-'}
       </BrawlerStatsItem>
     </div>
   );

@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Database } from 'brackets-manager';
 import { Id, Match, MatchGame } from 'brackets-model';
 import { Brawler, Participant, Tournament } from 'database';
+import ParticipantLink from './display/link/ParticipantLink';
+import BrawlerLink from './display/link/BrawlerLink';
 
 type MatchWithMetadata = Match & { metadata: { games: MatchGame[] } };
 
@@ -80,12 +82,7 @@ export default function BracketsViewer(params: {
                   </p>
                   {getDBParticipantById(match.opponent1.id)?.brawlers.map(
                     (b) => (
-                      <a
-                        className="hover:text-sky-300 text-gray-600"
-                        href={`/brawler/${b.username}`}
-                      >
-                        {b.username}
-                      </a>
+                      <BrawlerLink brawler={b} />
                     ),
                   )}
                 </div>
@@ -102,12 +99,7 @@ export default function BracketsViewer(params: {
                   </p>
                   {getDBParticipantById(match.opponent2.id)?.brawlers.map(
                     (b) => (
-                      <a
-                        className="hover:text-sky-300 text-gray-600"
-                        href={`/brawler/${b.username}`}
-                      >
-                        {b.username}
-                      </a>
+                      <BrawlerLink brawler={b} />
                     ),
                   )}
                 </div>
@@ -133,21 +125,9 @@ export default function BracketsViewer(params: {
                 <tr>
                   <th>
                     {opponent1 ? (
-                      <a
-                        className="hover:text-sky-300"
-                        href={
-                          params.tournament.teamSize === 1
-                            ? `/brawler/${
-                                getDBParticipantById(opponent1.id)?.brawlers[0]
-                                  .username
-                              }`
-                            : `/team/${
-                                getDBParticipantById(opponent1.id)?.teamId
-                              }`
-                        }
-                      >
-                        {opponent1.name}
-                      </a>
+                      <ParticipantLink
+                        participant={getDBParticipantById(opponent1.id)!}
+                      />
                     ) : (
                       'BYE'
                     )}
@@ -159,21 +139,9 @@ export default function BracketsViewer(params: {
                 <tr>
                   <th>
                     {opponent2 ? (
-                      <a
-                        className="hover:text-sky-300"
-                        href={
-                          params.tournament.teamSize === 1
-                            ? `/brawler/${
-                                getDBParticipantById(opponent2.id)?.brawlers[0]
-                                  .username
-                              }`
-                            : `/team/${
-                                getDBParticipantById(opponent2.id)?.teamId
-                              }`
-                        }
-                      >
-                        {opponent2.name}
-                      </a>
+                      <ParticipantLink
+                        participant={getDBParticipantById(opponent2.id)!}
+                      />
                     ) : (
                       'BYE'
                     )}

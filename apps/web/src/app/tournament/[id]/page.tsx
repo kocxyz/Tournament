@@ -1,7 +1,7 @@
 import BracketsViewers from '@/components/Brackets-Viewer';
 import UnderConstructionAlert from '@/components/UnderConstruction';
-import { manager } from 'brackets';
-import { prisma } from 'database';
+import { type DataTypes, type ValueToArray, manager } from 'brackets';
+import { TournamentStatus, prisma } from 'database';
 import { notFound } from 'next/navigation';
 
 export default async function TournamentDetailsPage({
@@ -24,13 +24,20 @@ export default async function TournamentDetailsPage({
     return notFound();
   }
 
-  const data = await manager.get.tournamentData(tournament.managerTournamentId);
+  const data: ValueToArray<DataTypes> | undefined = Array<TournamentStatus>(
+    TournamentStatus.IN_PROGRESS,
+    TournamentStatus.FINISHED,
+  ).includes(tournament.status)
+    ? await manager.get.tournamentData(tournament.managerTournamentId)
+    : undefined;
   return (
     <div className="flex-1 flex flex-col py-12 mx-12 md:mx-24 xl:mx-64">
       <UnderConstructionAlert />
-      <div className="flex flex-col justify-center items-center">
-        <BracketsViewers data={data} tournament={tournament} />
-      </div>
+      {data !== undefined ? (
+        <div className="flex flex-col justify-center items-center">
+          <BracketsViewers data={data} tournament={tournament} />
+        </div>
+      ) : undefined}
     </div>
   );
 }
